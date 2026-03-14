@@ -28,4 +28,6 @@ echo "Downloading model_patches/Z-Image-Turbo-Fun-Controlnet-Union.safetensors..
 wget -O "$COMFY_DIR/models/model_patches/Z-Image-Turbo-Fun-Controlnet-Union.safetensors" \
     "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/model_patches/Z-Image-Turbo-Fun-Controlnet-Union.safetensors"
 
+echo $TEST_VAL > /workspace/test_val
+
 echo "Done!"
