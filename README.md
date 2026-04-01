@@ -68,21 +68,34 @@ All models below are open-source, have native or first-class ComfyUI support, an
 |---|---|---|---|
 | `1_wan21_i2v.sh` | Wan 2.1 I2V 14B (fp16 + fp8 options) | ~41 GB (fp16) / ~25 GB (fp8) | 24–40 GB |
 | `2_hunyuan_i2v.sh` | HunyuanVideo I2V (bf16) | ~36 GB | 24–40 GB |
+| `3_flux1.sh` | FLUX.1 Schnell (text-to-image) | ~29.5 GB | 24 GB |
 
-Both scripts:
+All scripts:
 - Download all required model files into the correct ComfyUI directories
-- Download the official ComfyUI workflow template JSON
+- Download the ComfyUI workflow template JSON (or copy manually)
 - Work on fresh rented servers with `/workspace/ComfyUI` layout (RunPod, Vast.ai, etc.)
 
 ### Usage
 
 ```bash
-chmod +x 1_wan21_i2v.sh 2_hunyuan_i2v.sh
+chmod +x 1_wan21_i2v.sh 2_hunyuan_i2v.sh 3_flux1.sh
 ./1_wan21_i2v.sh    # downloads Wan 2.1 I2V
 ./2_hunyuan_i2v.sh  # downloads HunyuanVideo I2V
+./3_flux1.sh        # downloads FLUX.1 Schnell + bg removal custom node
 ```
 
 After running, open ComfyUI and load the downloaded workflow JSON from the `workflows/` directory (or use the built-in template browser).
+
+### FLUX.1 Workflow: Game Art with Transparent Background
+
+`3_flux1.sh` includes a workflow (`flux1_game_art_transparent.json`) that:
+- Generates game illustration style art using FLUX.1 Schnell (4 steps, fast)
+- Removes the background using InspyrenetRembg (auto-downloads its model on first run)
+- Saves the output as a PNG with transparent background
+
+The workflow uses: DualCLIPLoader → KSampler → VAEDecode → InspyrenetRembg → InvertMask → JoinImageWithAlpha → SaveImage
+
+To switch to FLUX.1 Dev (higher quality, 20+ steps), see the commented lines in `3_flux1.sh` — requires `HF_TOKEN` since the BFL repo is gated.
 
 ---
 
